@@ -25,6 +25,7 @@ class Settings(PropertyBag):
         'show_date_box': True,
         'show_second_hand': True,
         'minute_hand_snap': True,
+        'always_on_top': False,
         
         # Active theme
         'active_theme_name': 'default',

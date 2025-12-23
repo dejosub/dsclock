@@ -218,6 +218,10 @@ class AnalogClock(Gtk.Window):
         
         self.set_app_paintable(True)
         
+        # Set always on top if enabled
+        if self.settings.get('always_on_top'):
+            self.set_keep_above(True)
+        
         # Use EventBox to capture mouse events
         self.event_box = Gtk.EventBox()
         # Note: EventBox needs a visible window to receive events
@@ -586,6 +590,12 @@ class AnalogClock(Gtk.Window):
         show_seconds_item.connect("toggled", self.on_show_seconds_toggled)
         menu.append(show_seconds_item)
         
+        # Always on Top checkbox
+        always_on_top_item = Gtk.CheckMenuItem(label="Always on Top")
+        always_on_top_item.set_active(self.settings.get('always_on_top'))
+        always_on_top_item.connect("toggled", self.on_always_on_top_toggled)
+        menu.append(always_on_top_item)
+        
         # Separator
         menu.append(Gtk.SeparatorMenuItem())
         
@@ -634,6 +644,13 @@ class AnalogClock(Gtk.Window):
         self.settings.set('show_second_hand', widget.get_active())
         self.settings.save()
         self.queue_draw()
+    
+    def on_always_on_top_toggled(self, widget):
+        """Handle always on top toggle"""
+        always_on_top = widget.get_active()
+        self.settings.set('always_on_top', always_on_top)
+        self.settings.save()
+        self.set_keep_above(always_on_top)
     
     def on_customize_clicked(self, widget):
         """Handle customize menu item - open unified customization dialog"""

@@ -1503,6 +1503,18 @@ class CustomizeDialog(Gtk.Dialog):
         grid.attach(snap_minute_switch, 1, row, 1, 1)
         row += 1
         
+        # Always on Top checkbox
+        label = Gtk.Label(label="Always on Top:")
+        label.set_halign(Gtk.Align.START)
+        grid.attach(label, 0, row, 1, 1)
+        
+        always_on_top_switch = Gtk.Switch()
+        always_on_top_switch.set_active(self.parent_clock.settings.get('always_on_top'))
+        always_on_top_switch.set_halign(Gtk.Align.START)
+        always_on_top_switch.connect("notify::active", self.on_always_on_top_toggled_dialog)
+        grid.attach(always_on_top_switch, 1, row, 1, 1)
+        row += 1
+        
         return grid
     
     def _populate_themes(self):
@@ -2872,6 +2884,11 @@ class CustomizeDialog(Gtk.Dialog):
     def on_minute_hand_snap_toggled(self, switch, gparam):
         value = switch.get_active()
         self._on_settings_property_changed('minute_hand_snap', value)
+    
+    def on_always_on_top_toggled_dialog(self, switch, gparam):
+        value = switch.get_active()
+        self._on_settings_property_changed('always_on_top', value)
+        self.parent_clock.set_keep_above(value)
     
     def on_second_hand_length_changed(self, scale):
         value = scale.get_value()
