@@ -1,0 +1,84 @@
+{
+  "show_numbers": true,
+  "show_hour_ticks": false,
+  "show_minute_ticks": false,
+  "background_color": [
+    1.0,
+    0.9455555555555556,
+    0.8366666666666667
+  ],
+  "background_opacity": 0.7,
+  "face_texture_source": "builtin",
+  "face_texture_name": "psychedelia.png",
+  "enable_face_color": true,
+  "enable_face_texture": true,
+  "face_color_opacity": 0.91,
+  "face_texture_opacity": 0.22,
+  "rim_width": 0.02,
+  "rim_opacity": 1.0,
+  "rim_color": [
+    0.12549019607843137,
+    0.06274509803921567,
+    0.36470588235294116
+  ],
+  "hour_tick_size": 0.026,
+  "hour_tick_position": 0.975,
+  "hour_tick_style": "square",
+  "hour_tick_aspect_ratio": 1.0,
+  "minute_tick_size": 0.018,
+  "minute_tick_position": 0.975,
+  "minute_tick_style": "rectangular",
+  "minute_tick_aspect_ratio": 0.25,
+  "number_position": 0.877,
+  "number_size": 0.155,
+  "number_font": "Sans",
+  "number_bold": true,
+  "hour_hand_length": 0.55,
+  "hour_hand_tail": 0.12,
+  "hour_hand_width": 0.04,
+  "minute_hand_length": 0.74,
+  "minute_hand_tail": 0.16,
+  "minute_hand_width": 0.025,
+  "second_hand_length": 0.88,
+  "second_hand_tail": 0.2,
+  "second_hand_width": 0.01,
+  "center_dot_radius": 0.04,
+  "date_font_size": 0.1,
+  "date_font": "Sans",
+  "date_bold": false,
+  "hands_color": [
+    0,
+    0,
+    0
+  ],
+  "numbers_color": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "ticks_color": [
+    0.02395225225225236,
+    0.02126666666666667,
+    0.22
+  ],
+  "minute_ticks_color": [
+    0.12549019607843137,
+    0.06274509803921567,
+    0.36470588235294116
+  ],
+  "border_color": [
+    0,
+    0,
+    0
+  ],
+  "second_hand_color": [
+    1,
+    0,
+    0
+  ],
+  "date_text_color": [
+    0,
+    0,
+    0
+  ]
+}

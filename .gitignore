@@ -1,0 +1,36 @@
+# Snap build artifacts
+parts/
+prime/
+stage/
+build/
+overlay/
+*.snap
+.craft/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# IDE
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Screenshots (upload to Snap Store, don't commit)
+screenshots/

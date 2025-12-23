@@ -1,0 +1,99 @@
+{
+  "show_numbers": false,
+  "show_hour_ticks": true,
+  "show_minute_ticks": false,
+  "background_color": [
+    0.4901960784313725,
+    0.7647058823529411,
+    0.5058823529411763
+  ],
+  "background_opacity": 0.7,
+  "face_texture_source": "builtin",
+  "face_texture_name": "evergreen forest.png",
+  "enable_face_color": true,
+  "enable_face_texture": true,
+  "face_color_opacity": 0.33,
+  "face_texture_opacity": 0.59,
+  "rim_width": 0.02,
+  "rim_opacity": 1.0,
+  "rim_color": [
+    0.12549019607843137,
+    0.06274509803921567,
+    0.36470588235294116
+  ],
+  "hour_tick_size": 0.026,
+  "hour_tick_position": 0.948,
+  "hour_tick_style": "round",
+  "hour_tick_aspect_ratio": 1.0,
+  "minute_tick_size": 0.018,
+  "minute_tick_position": 0.948,
+  "minute_tick_style": "rectangular",
+  "minute_tick_aspect_ratio": 0.25,
+  "number_position": 0.81,
+  "number_size": 0.155,
+  "number_font": "Sans",
+  "number_bold": true,
+  "use_roman_numerals": false,
+  "show_cardinal_numbers_only": false,
+  "hour_hand_length": 0.55,
+  "hour_hand_tail": 0.12,
+  "hour_hand_width": 0.04,
+  "hour_hand_image_width": 0.7482635675785653,
+  "hour_hand_image_source": "builtin",
+  "hour_hand_image_name": "modern",
+  "minute_hand_length": 0.74,
+  "minute_hand_tail": 0.16,
+  "minute_hand_width": 0.025,
+  "minute_hand_image_width": 0.8958341352965282,
+  "minute_hand_image_source": "builtin",
+  "minute_hand_image_name": "modern",
+  "second_hand_length": 0.86,
+  "second_hand_tail": 0.2,
+  "second_hand_width": 0.01,
+  "second_hand_image_width": 1.0,
+  "second_hand_image_source": "builtin",
+  "second_hand_image_name": "modern",
+  "center_dot_radius": 0.025,
+  "date_box_width": 1.18,
+  "date_box_height": 0.24,
+  "date_box_margin": 0.12,
+  "date_format": "%a, %d %b",
+  "date_font_size": 0.1,
+  "date_font": "Sans",
+  "date_bold": false,
+  "hands_color": [
+    0.4901960784313725,
+    0.7647058823529411,
+    0.5058823529411763
+  ],
+  "numbers_color": [
+    0.9490196078431372,
+    0.9098039215686274,
+    0.788235294117647
+  ],
+  "ticks_color": [
+    0.4901960784313725,
+    0.7647058823529411,
+    0.5058823529411763
+  ],
+  "minute_ticks_color": [
+    0.12549019607843137,
+    0.06274509803921567,
+    0.36470588235294116
+  ],
+  "border_color": [
+    0,
+    0,
+    0
+  ],
+  "second_hand_color": [
+    0.9764705882352941,
+    0.9411764705882353,
+    0.4196078431372549
+  ],
+  "date_text_color": [
+    0.5607843137254902,
+    0.9411764705882353,
+    0.6431372549019608
+  ]
+}

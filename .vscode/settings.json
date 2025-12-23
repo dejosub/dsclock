@@ -1,0 +1,12 @@
+{
+  "files.exclude": {
+    "parts/": true,
+    "prime/": true,
+    "stage/": true,
+    "build/": true,
+    "overlay/": true,
+    ".craft/": true,
+    "**/*.snap": true,
+    "__pycache__/": true
+  }
+}

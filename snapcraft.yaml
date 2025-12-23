@@ -1,0 +1,178 @@
+name: dsclock
+base: core24
+version: '1.0'
+title: Analog Clock
+summary: Customizable analog clock with themes
+description: |
+  A beautiful, customizable analog clock for Linux with extensive customization options:
+  - Transparent background that blends with your desktop
+  - Multiple built-in themes with full customization support
+  - Hand image themes (breguet, grandfather, modern, spear styles)
+  - Face textures and customizable colors
+  - Optional date display with formatting options
+  - Automatic position saving and restore
+  - Theme management (save, load, duplicate, delete)
+  - Auto-start on login option
+  - Draggable interface with context menu
+
+website: https://github.com/dejosub/dsclock
+source-code: https://github.com/dejosub/dsclock
+issues: https://github.com/dejosub/dsclock/issues
+contact: https://github.com/dejosub/dsclock/issues
+license: MIT
+
+grade: stable
+confinement: strict
+icon: snap/gui/icon.png
+
+lint:
+  ignore:
+    - library:
+        - libGLX_mesa.so.0
+        - libcolordprivate.so.2
+        - libdconf.so.1
+        - libgdk_pixbuf_xlib-2.0.so.0
+        - libharfbuzz-gobject.so.0
+        - libicuio.so.74
+        - libicutest.so.74
+        - libpangoxft-1.0.so.0
+        - libvulkan.so.1
+
+apps:
+  dsclock:
+    command: bin/dsclock
+    environment:
+      PYTHONPATH: $SNAP/usr/lib/python3/dist-packages:$SNAP/usr/lib/python3.12/dist-packages
+      GI_TYPELIB_PATH: $SNAP/usr/lib/x86_64-linux-gnu/girepository-1.0:$SNAP/usr/lib/girepository-1.0
+      # Include both common lib locations inside snaps
+      LD_LIBRARY_PATH: $SNAP/usr/lib/x86_64-linux-gnu:$SNAP/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
+      FONTCONFIG_PATH: $SNAP/etc/fonts
+      FONTCONFIG_FILE: $SNAP/etc/fonts/fonts.conf
+      # Ensure GTK can find icon themes + MIME database shipped in the snap
+      XDG_DATA_DIRS: $SNAP/usr/share:$XDG_DATA_DIRS
+      # Force gdk-pixbuf to use the loaders cache we generate at build time
+      GDK_PIXBUF_MODULE_FILE: $SNAP/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders.cache
+      GDK_PIXBUF_MODULEDIR: $SNAP/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders
+    plugs:
+      - desktop
+      - desktop-legacy
+      - wayland
+      - x11
+      - home
+    desktop: share/applications/dsclock.desktop
+
+parts:
+  dsclock:
+    plugin: python
+    source: .
+    source-type: local
+    stage-packages:
+      - python3-gi
+      - python3-gi-cairo
+      - gir1.2-gtk-3.0
+      - libgtk-3-0
+      - x11-utils
+
+      # Sound event modules (GTK2 + GTK3). GTK2 one silences the warning.
+      - libcanberra-gtk-module
+      - libcanberra-gtk3-module
+
+      - fonts-dejavu-core
+      - fontconfig
+
+      # SVG support (pixbuf svg loader depends on this)
+      - librsvg2-common
+      - librsvg2-2
+
+      # gdk-pixbuf + tools
+      - libgdk-pixbuf-2.0-0
+      - libgdk-pixbuf2.0-bin
+      - libgdk-pixbuf2.0-0
+
+      # Runtime image codec deps for core24/noble
+      - libpng16-16t64
+      - libjpeg-turbo8
+
+      # Icon theme for Adwaita assets/icons
+      - adwaita-icon-theme
+
+      # MIME database so GTK/gdk-pixbuf can resolve types correctly
+      - shared-mime-info
+
+    override-build: |
+      set -eux
+      craftctl default
+
+      mkdir -p "$CRAFT_PART_INSTALL/bin"
+      mkdir -p "$CRAFT_PART_INSTALL/share/applications"
+      mkdir -p "$CRAFT_PART_INSTALL/lib/dsclock"
+      mkdir -p "$CRAFT_PART_INSTALL/lib/dsclock/assets/textures"
+      mkdir -p "$CRAFT_PART_INSTALL/lib/dsclock/assets/hands"
+
+      cp "$CRAFT_PROJECT_DIR/dsclock.py" "$CRAFT_PART_INSTALL/lib/dsclock/"
+      cp "$CRAFT_PROJECT_DIR/dialogs.py" "$CRAFT_PART_INSTALL/lib/dsclock/"
+      cp "$CRAFT_PROJECT_DIR/theme.py" "$CRAFT_PART_INSTALL/lib/dsclock/"
+      cp "$CRAFT_PROJECT_DIR/settings.py" "$CRAFT_PART_INSTALL/lib/dsclock/"
+      cp "$CRAFT_PROJECT_DIR/property_bag.py" "$CRAFT_PART_INSTALL/lib/dsclock/"
+
+      if [ -d "$CRAFT_PROJECT_DIR/assets/textures" ]; then
+        cp -a "$CRAFT_PROJECT_DIR/assets/textures/." "$CRAFT_PART_INSTALL/lib/dsclock/assets/textures/"
+      fi
+
+      # Copy hand themes (only processed images, not originals)
+      if [ -d "$CRAFT_PROJECT_DIR/assets/hands" ]; then
+        for hand_dir in "$CRAFT_PROJECT_DIR/assets/hands"/*; do
+          if [ -d "$hand_dir" ]; then
+            hand_name=$(basename "$hand_dir")
+            if [ "$hand_name" != "README.md" ]; then
+              mkdir -p "$CRAFT_PART_INSTALL/lib/dsclock/assets/hands/$hand_name"
+              if [ -d "$hand_dir/processed" ]; then
+                cp -a "$hand_dir/processed" "$CRAFT_PART_INSTALL/lib/dsclock/assets/hands/$hand_name/"
+              fi
+            fi
+          fi
+        done
+      fi
+
+      # Copy bundled themes
+      mkdir -p "$CRAFT_PART_INSTALL/lib/dsclock/bundled_themes"
+      if [ -d "$CRAFT_PROJECT_DIR/bundled_themes" ]; then
+        cp -a "$CRAFT_PROJECT_DIR/bundled_themes/." "$CRAFT_PART_INSTALL/lib/dsclock/bundled_themes/"
+      fi
+
+      # Build MIME database inside snap
+      if [ -x "$CRAFT_PART_INSTALL/usr/bin/update-mime-database" ]; then
+        "$CRAFT_PART_INSTALL/usr/bin/update-mime-database" "$CRAFT_PART_INSTALL/usr/share/mime" || true
+      fi
+
+      cat > "$CRAFT_PART_INSTALL/bin/dsclock" << 'LAUNCHER'
+      #!/bin/bash
+      
+      # Generate gdk-pixbuf loaders cache at runtime with actual $SNAP path
+      CACHE_DIR="$SNAP/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0"
+      CACHE_FILE="$CACHE_DIR/loaders.cache"
+      QUERY="$SNAP/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/gdk-pixbuf-query-loaders"
+      
+      # Only regenerate if cache doesn't exist or is older than 1 day
+      if [ ! -f "$CACHE_FILE" ] || [ -x "$QUERY" ]; then
+        # Generate cache with actual runtime paths
+        if [ -x "$QUERY" ]; then
+          "$QUERY" > "$CACHE_FILE" 2>/dev/null || true
+        fi
+      fi
+      
+      exec python3 "$SNAP/lib/dsclock/dsclock.py" "$@"
+      LAUNCHER
+      chmod +x "$CRAFT_PART_INSTALL/bin/dsclock"
+
+      cat > "$CRAFT_PART_INSTALL/share/applications/dsclock.desktop" << 'DESKTOP'
+      [Desktop Entry]
+      Type=Application
+      Name=Analog Clock
+      Comment=Simple analog clock with date display
+      Exec=dsclock
+      Icon=dsclock
+      Terminal=false
+      Categories=Utility;
+      Keywords=clock;time;analog;
+      DESKTOP
