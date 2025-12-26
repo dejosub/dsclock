@@ -88,73 +88,12 @@ sys.excepthook = exception_hook
 
 
 # ============================================================================
-# VISUAL CONFIGURATION - Adjust these values to customize the clock appearance
+# VISUAL CONFIGURATION
 # ============================================================================
 
-# Clock face
-BACKGROUND_OPACITY = 0.7  # White background opacity (0.0 = fully transparent, 1.0 = opaque)
-DEFAULT_BACKGROUND_COLOR = (1, 1, 1)  # Default white color (R, G, B)
-DEFAULT_HANDS_COLOR = (0, 0, 0)  # Default black color (R, G, B)
-DEFAULT_NUMBERS_COLOR = (0, 0, 0)  # Default black color (R, G, B)
-DEFAULT_TICKS_COLOR = (0, 0, 0)  # Default black color (R, G, B) - hour ticks
-DEFAULT_MINUTE_TICKS_COLOR = (0, 0, 0)  # Default black color (R, G, B) - minute ticks
-DEFAULT_BORDER_COLOR = (0, 0, 0)  # Default black color (R, G, B)
-DEFAULT_SECOND_HAND_COLOR = (1, 0, 0)  # Default red color (R, G, B)
-DEFAULT_DATE_TEXT_COLOR = (0, 0, 0)  # Default black color (R, G, B)
-CLOCK_BORDER_WIDTH = 4
 CLOCK_MARGIN = 20  # Space between clock edge and window edge
-
-RIM_WIDTH = 0.02
-RIM_OPACITY = 1.0
-
-# Hour ticks
-HOUR_TICK_SIZE = 0.01875  # Size of hour ticks (as fraction of radius)
-HOUR_TICK_POSITION = 0.975  # Position of tick back edge (1.0 = rim)
-HOUR_TICK_STYLE = "square"  # Style: "square", "round", or "rectangular"
-HOUR_TICK_ASPECT_RATIO = 1.0  # Aspect ratio for rectangular ticks (width/height)
-
-# Minute ticks
-MINUTE_TICK_SIZE = 0.0375  # Size of minute ticks (as fraction of radius)
-MINUTE_TICK_POSITION = 0.975  # Position of tick end (1.0 = rim)
-MINUTE_TICK_STYLE = "rectangular"  # Style: "square", "round", or "rectangular"
-MINUTE_TICK_ASPECT_RATIO = 0.1  # Aspect ratio for rectangular ticks (width/height) - skinny by default
-
-# Numbers
-NUMBER_POSITION = 0.835  # Position of numbers (as fraction of radius)
-NUMBER_SIZE = 0.155  # Font size (as fraction of radius)
-NUMBER_FONT = "Sans"  # Font family for numbers
-NUMBER_BOLD = True  # Whether numbers are bold
-
-# Hour hand
-HOUR_HAND_LENGTH = 0.55  # Length (as fraction of radius)
-HOUR_HAND_TAIL_LENGTH = 0.12  # Tail length behind center (as fraction of radius)
-HOUR_HAND_WIDTH = 0.04  # Width (as fraction of radius)
-
-# Minute hand
-MINUTE_HAND_LENGTH = 0.74  # Length (as fraction of radius)
-MINUTE_HAND_TAIL_LENGTH = 0.16  # Tail length behind center (as fraction of radius)
-MINUTE_HAND_WIDTH = 0.025  # Width (as fraction of radius)
-MINUTE_HAND_SNAP = False  # Snap to minute ticks (no smooth seconds movement)
-
-# Second hand
-SECOND_HAND_LENGTH = 0.88  # Length (as fraction of radius)
-SECOND_HAND_TAIL_LENGTH = 0.2  # Tail length behind center (as fraction of radius)
-SECOND_HAND_WIDTH = 0.01  # Width (as fraction of radius)
-
-# Center dot
-CENTER_DOT_RADIUS = 0.04  # Radius (as fraction of clock radius)
-
-# Date display (in separate box below clock)
-DATE_BOX_WIDTH = 1.2  # Width of date box (as fraction of radius)
-DATE_BOX_HEIGHT = 0.2  # Height of date box (as fraction of radius)
-DATE_BOX_MARGIN = 0.08  # Space between clock and date box (as fraction of radius)
-DATE_FONT_SIZE = 0.1  # Font size (as fraction of radius)
+INPUT_SHAPE_MARGIN = 10  # Input shape (clickable area) margin
 DATE_BOX_CORNER_RADIUS = 0.05  # Corner radius (as fraction of radius)
-DATE_FONT = "Sans"  # Font family for date
-DATE_BOLD = False  # Whether date text is bold
-
-# Input shape (clickable area)
-INPUT_SHAPE_MARGIN = 10
 
 # ============================================================================
 
