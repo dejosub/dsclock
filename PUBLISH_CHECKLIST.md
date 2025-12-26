@@ -86,11 +86,14 @@ snapcraft login
 # Register name (one-time)
 snapcraft register dsclock
 
-# Upload
-snapcraft upload build/dsclock_*.snap
+# Extract version for upload verification
+VERSION=$(grep "^version:" snapcraft.yaml | awk '{print $2}' | tr -d "'\"")
 
-# Release to stable
-snapcraft release dsclock 1 stable
+# Upload
+snapcraft upload build/dsclock_${VERSION}_amd64.snap
+
+# Release to stable (use the revision number returned from upload)
+snapcraft release dsclock <revision> stable
 ```
 
 ## Store Listing
@@ -123,12 +126,12 @@ When you make changes:
 NEW_VERSION="<new_version>"  # e.g., '1.2.0'
 
 # 2. Create new release branch
-git checkout -b release/v${NEW_VERSION}
+git checkout -b release/${NEW_VERSION}
 
 # 3. Commit and push
 git add snapcraft.yaml
 git commit -m "Bump version to ${NEW_VERSION}"
-git push -u origin release/v${NEW_VERSION}
+git push -u origin release/${NEW_VERSION}
 
 # 4. Build and publish
 ./rebuild_snap.sh
@@ -137,8 +140,8 @@ snapcraft release dsclock <revision> stable
 
 # 5. Merge to main and tag
 git checkout main
-git merge release/v${NEW_VERSION}
-git tag v${NEW_VERSION}
+git merge release/${NEW_VERSION}
+git tag ${NEW_VERSION}
 git push origin main --tags
 ```
 
