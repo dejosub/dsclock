@@ -21,7 +21,8 @@ echo "Moving snap to build directory..."
 mv *.snap build/
 
 echo "Installing snap..."
-sudo snap install build/dsclock_1.0_amd64.snap --dangerous
+VERSION=$(grep "^version:" snapcraft.yaml | awk '{print $2}' | tr -d "'\"")
+sudo snap install build/dsclock_${VERSION}_amd64.snap --dangerous
 
 echo "Done! Starting the clock..."
 nohup dsclock >/dev/null 2>&1 &

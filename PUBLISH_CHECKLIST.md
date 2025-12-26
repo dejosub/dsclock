@@ -44,18 +44,21 @@ file screenshots/*.png
 
 ### Create Release Branch
 ```bash
+# Extract version from snapcraft.yaml
+VERSION=$(grep "^version:" snapcraft.yaml | awk '{print $2}' | tr -d "'\"")
+
 # Create and switch to release branch
-git checkout -b release/v1.0
+git checkout -b release/v${VERSION}
 
 # Ensure snapcraft.yaml version is correct
 grep "^version:" snapcraft.yaml
 
 # Commit any final changes
 git add .
-git commit -m "Prepare release v1.0"
+git commit -m "Prepare release v${VERSION}"
 
 # Push release branch
-git push -u origin release/v1.0
+git push -u origin release/v${VERSION}
 ```
 
 ## Build Steps
@@ -72,7 +75,7 @@ ls -la snapcraft.yaml snap/gui/icon.png LICENSE
 ./rebuild_snap.sh
 
 # Test: drag, close, reopen - verify position saved
-# The snap file will be in build/dsclock_1.0_amd64.snap
+# The snap file will be in build/dsclock_<version>_amd64.snap (version from snapcraft.yaml)
 ```
 
 ### 3. Publish
@@ -115,16 +118,17 @@ dsclock
 When you make changes:
 
 ```bash
-# 1. Create new release branch
-git checkout -b release/v1.1
+# 1. Update version in snapcraft.yaml
+# Edit: version: '<new_version>'
+NEW_VERSION="<new_version>"  # e.g., '1.2.0'
 
-# 2. Update version in snapcraft.yaml
-# Edit: version: '1.1'
+# 2. Create new release branch
+git checkout -b release/v${NEW_VERSION}
 
 # 3. Commit and push
 git add snapcraft.yaml
-git commit -m "Bump version to 1.1"
-git push -u origin release/v1.1
+git commit -m "Bump version to ${NEW_VERSION}"
+git push -u origin release/v${NEW_VERSION}
 
 # 4. Build and publish
 ./rebuild_snap.sh
@@ -133,8 +137,8 @@ snapcraft release dsclock <revision> stable
 
 # 5. Merge to main and tag
 git checkout main
-git merge release/v1.1
-git tag v1.1
+git merge release/v${NEW_VERSION}
+git tag v${NEW_VERSION}
 git push origin main --tags
 ```
 
